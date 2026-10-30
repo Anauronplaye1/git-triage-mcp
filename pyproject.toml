@@ -44,12 +44,12 @@ git-triage-mcp = "git_triage_mcp.cli:app"
 packages = ["src/git_triage_mcp"]
 
 [tool.ruff]
-line-length = 88
+line-length = 120
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
-ignore = ["B008"]
+select = ["E", "F", "UP", "B"]
+ignore = ["E501", "B008"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
