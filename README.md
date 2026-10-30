@@ -1,6 +1,6 @@
 # git-triage-mcp
 
-[![CI](https://github.com/example/git-triage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/example/git-triage-mcp/actions)
+[![CI](https://github.com/Anauronplaye1/git-triage-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Anauronplaye1/git-triage-mcp/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -15,7 +15,7 @@ Open-source maintainers face an asymmetry of effort: contributors can open large
 - Did a subtle keyword parameter get converted into a required positional arg?
 - Does the PR description match the actual semantic changes made to the codebase?
 
-Standard unified git diffs are raw text; they contain whitespace shifts and line-number churn that flood LLM context windows. **`git-triage-mcp`** parses Python ASTs natively across git boundaries and provides tools via MCP so coding agents (like Codex, Claude Code, and Cursor) can deliver immediate triage summaries directly to the reviewer.
+Standard unified git diffs are raw text; they contain whitespace shifts and line-number churn that flood LLM context windows. **`git-triage-mcp`** parses Python ASTs natively across git boundaries and provides tools via MCP so coding agents (like Claude Code, Claude Desktop, Cursor, and Codex) can deliver immediate triage summaries directly to the reviewer.
 
 ---
 
@@ -23,7 +23,7 @@ Standard unified git diffs are raw text; they contain whitespace shifts and line
 
 ```mermaid
 graph TD
-    A[Agent: Claude / Codex / Cursor] <-->|MCP Protocol / JSON-RPC| B(git-triage-mcp Server)
+    A[Agent: Claude Code / Cursor / Codex] <-->|MCP Protocol / JSON-RPC| B(git-triage-mcp Server)
     B --> C[Git Interface: GitPython]
     B --> D[AST Engine: Python ast Module]
     C --> E[(Git Tree / Commits)]
