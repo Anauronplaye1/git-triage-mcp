@@ -35,8 +35,6 @@ def get_pr_context(
     repo = Repo(Path(repo_path).resolve())
     ast_summary = inspect_git_diff_ast(repo_path, base_ref, head_ref)
 
-    commit_base = repo.commit(base_ref)
-    commit_head = repo.commit(head_ref)
     raw_diff = repo.git.diff(
         f"{base_ref}...{head_ref}",
         unified=3,
@@ -114,55 +112,3 @@ def generate_release_summary(
     Returns:
         Structured Markdown text suitable for GitHub Release notes.
     """
-    repo = Repo(Path(repo_path).resolve())
-    ast_info = inspect_git_diff_ast(repo_path, base_ref, head_ref)
-    commits = list(repo.iter_commits(f"{base_ref}..{head_ref}"))
-
-    breaking = ast_info["breaking_changes"]
-    features: list[str] = []
-    fixes: list[str] = []
-    chores: list[str] = []
-
-    for c in commits:
-        line = f"- {c.summary} ({c.hexsha[:7]}) by @{c.author.name}"
-        lowered = c.summary.lower()
-        if lowered.startswith("feat"):
-            features.append(line)
-        elif lowered.startswith("fix"):
-            fixes.append(line)
-        else:
-            chores.append(line)
-
-    lines = [
-        f"# Release Summary ({base_ref} -> {head_ref})",
-        "",
-        "## Breaking Changes 🚨",
-    ]
-
-    if breaking:
-        for b in breaking:
-            lines.append(
-                f"- **[{b['change_type']}]** `{b['file']}`: {b['description']}"
-            )
-    else:
-        lines.append("No semantic breaking changes identified.")
-
-    lines.extend(["", "## Features 🚀"])
-    lines.extend(features if features else ["No new features categorized."])
-
-    lines.extend(["", "## Bug Fixes 🐛"])
-    lines.extend(fixes if fixes else ["No bug fixes recorded."])
-
-    lines.extend(["", "## Internal & Maintenance 🛠️"])
-    lines.extend(chores if chores else ["No maintenance commits recorded."])
-
-    return "\n".join(lines)
-
-
-def run_server() -> None:
-    """Starts the FastMCP transport listener."""
-    mcp.run()
-
-
-if __name__ == "__main__":
-    run_server()
